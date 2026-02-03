@@ -8,6 +8,7 @@ function App() {
     phone: '',
     message: ''
   })
+  const [menuOpen, setMenuOpen] = useState(false)
 
   // Clear hash and scroll to top on page load/refresh
   useEffect(() => {
@@ -16,6 +17,11 @@ function App() {
     }
     window.scrollTo(0, 0)
   }, [])
+
+  // Close menu when clicking a nav link
+  const handleNavClick = () => {
+    setMenuOpen(false)
+  }
 
   const handleChange = (e) => {
     setFormData({
@@ -43,14 +49,19 @@ function App() {
             <img src="/images/image-removebg-preview.png" alt="ReTerra Logo" className="logo-img" />
             <span className="logo-text">ReTerra Green Solutions</span>
           </a>
-          <nav className="nav">
-            <a href="#about">About Us</a>
-            <a href="#challenge">Challenge</a>
-            <a href="#opportunities">Opportunities</a>
-            <a href="#approach">Our Approach</a>
-            <a href="#plan">Our Offerings</a>
-            <a href="#collaborations">Collaborations</a>
-            <a href="#contact">Contact</a>
+          <button className={`hamburger ${menuOpen ? 'active' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <nav className={`nav ${menuOpen ? 'open' : ''}`}>
+            <a href="#about" onClick={handleNavClick}>About Us</a>
+            <a href="#challenge" onClick={handleNavClick}>Challenge</a>
+            <a href="#opportunities" onClick={handleNavClick}>Opportunities</a>
+            <a href="#approach" onClick={handleNavClick}>Our Approach</a>
+            <a href="#plan" onClick={handleNavClick}>Our Offerings</a>
+            <a href="#collaborations" onClick={handleNavClick}>Collaborations</a>
+            <a href="#contact" onClick={handleNavClick}>Contact</a>
           </nav>
         </div>
       </header>
@@ -62,7 +73,6 @@ function App() {
           <p className="hero-welcome">Welcome to</p>
           <h1>ReTerra Green Solutions</h1>
           <h2 className="hero-headline">Revolutionizing Solar Panel Recycling for a Sustainable Future</h2>
-          <p className="hero-description">At the forefront of solar panel recycling, spearheading efforts for sustainable and environmentally conscious disposal and recycling practices.</p>
           <div className="hero-cta">
             <a href="#about" className="cta-button primary">Learn More</a>
             <a href="#contact" className="cta-button secondary">Contact Us</a>

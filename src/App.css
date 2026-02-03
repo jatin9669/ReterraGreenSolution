@@ -118,6 +118,44 @@
   box-shadow: 0 5px 20px rgba(74, 222, 128, 0.2);
 }
 
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
 /* Hero Section */
 .hero {
   background: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80') center/cover no-repeat;
@@ -1368,34 +1406,102 @@
 }
 
 /* ==================== RESPONSIVE ==================== */
-@media (max-width: 1024px) {
-  .importance-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 
-@media (max-width: 900px) {
+/* Tablet & Mobile - Hamburger Menu */
+@media (max-width: 1240px) {
   .header .container {
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 20px;
+  }
+
+  .logo {
+    margin-right: 0;
+  }
+
+  .hamburger {
+    display: flex;
   }
 
   .nav {
-    flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(15, 32, 39, 0.98) 0%, rgba(32, 58, 67, 0.98) 50%, rgba(44, 83, 100, 0.98) 100%);
+    flex-direction: column;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
+    padding: 80px 30px;
+    transition: right 0.4s ease;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav.open {
+    right: 0;
+  }
+
+  .nav a {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 18px 25px !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+  }
+
+  .nav a:hover {
+    transform: none;
+    background: rgba(74, 222, 128, 0.2);
+  }
+
+  .hero {
+    padding: 100px 20px 60px;
+    min-height: 100vh;
   }
 
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .hero-headline {
+    font-size: 1.2rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .section {
+    padding: 60px 0;
   }
 
   .section h2 {
     font-size: 1.8rem;
+    margin-bottom: 30px;
   }
 
   .about-wrapper {
     grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .about-image {
+    min-height: 300px;
   }
 
   .importance-grid {
@@ -1408,30 +1514,26 @@
 
   .framework-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
-  .contact-wrapper {
-    grid-template-columns: 1fr;
+  .challenge-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
-  .contact-info {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+  .opportunities-header h3 {
+    font-size: 1.5rem;
   }
 
-  .contact-info-card {
-    flex: 1;
-    min-width: 200px;
+  .accordion-item {
+    padding: 20px;
   }
 
-  .contact-form {
-    margin: 0 15px;
-    padding: 30px;
-  }
-
-  .opportunities-grid {
-    grid-template-columns: 1fr;
+  .accordion-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
   }
 
   .approach-timeline::before {
@@ -1441,29 +1543,140 @@
   .approach-step {
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 80px;
+    padding-left: 70px;
   }
 
   .step-number {
     position: absolute;
     left: 0;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
   }
 
   .offerings-grid {
     grid-template-columns: 1fr;
   }
 
+  .offering-card {
+    padding: 25px;
+  }
+
   .collab-grid {
     grid-template-columns: 1fr;
+    gap: 25px;
   }
 
   .collab-card {
-    max-width: 400px;
+    max-width: 450px;
     margin: 0 auto;
+  }
+
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .contact-info {
+    flex-direction: column;
+  }
+
+  .contact-info-card {
+    flex: none;
+    width: 100%;
+  }
+
+  .contact-form {
+    padding: 30px 25px;
   }
 }
 
+/* Mobile */
 @media (max-width: 600px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .header .container {
+    padding: 12px 15px;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+    gap: 8px;
+  }
+
+  .logo-img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .nav {
+    gap: 5px;
+  }
+
+  .nav a {
+    padding: 16px 20px !important;
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+  }
+
+  .hero {
+    padding: 90px 15px 50px;
+    min-height: 100vh;
+  }
+
+  .hero-welcome {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  .hero-headline {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+
+  .cta-button {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+
+  .hero-scroll {
+    display: none;
+  }
+
+  .section {
+    padding: 50px 0;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+  }
+
+  .about-highlight {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+
+  .importance-section h3 {
+    font-size: 1.2rem;
+  }
+
   .importance-grid {
     grid-template-columns: 1fr;
   }
@@ -1472,7 +1685,197 @@
     height: 180px;
   }
 
+  .framework-card {
+    padding: 20px;
+  }
+
+  .framework-icon {
+    font-size: 2rem;
+  }
+
+  .framework-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .challenge-header h3 {
+    font-size: 1.3rem;
+  }
+
   .challenge-grid {
     grid-template-columns: 1fr;
+  }
+
+  .challenge-card h4 {
+    font-size: 1rem;
+    padding: 15px 15px 8px;
+  }
+
+  .challenge-card p {
+    padding: 0 15px 15px;
+    font-size: 0.9rem;
+  }
+
+  .opportunities-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .accordion-item {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .accordion-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+
+  .accordion-content h4 {
+    font-size: 1rem;
+  }
+
+  .accordion-content p {
+    font-size: 0.85rem;
+  }
+
+  .accordion-arrow {
+    display: none;
+  }
+
+  .approach-subtitle {
+    font-size: 1rem;
+  }
+
+  .approach-image {
+    margin-bottom: 40px;
+  }
+
+  .approach-image img {
+    max-height: 250px;
+  }
+
+  .step-content h4 {
+    font-size: 1.1rem;
+    padding: 15px 20px 8px;
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+    padding: 0 20px 20px;
+  }
+
+  .step-content img {
+    height: 120px;
+  }
+
+  .offering-card {
+    padding: 20px;
+  }
+
+  .offering-icon {
+    font-size: 2.5rem;
+  }
+
+  .offering-number {
+    font-size: 3rem;
+  }
+
+  .offering-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .offering-list li {
+    font-size: 0.85rem;
+    padding: 8px 0 8px 20px;
+  }
+
+  .materials-recovered span {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .collab-subtitle {
+    font-size: 1rem;
+  }
+
+  .collab-icon-wrapper {
+    height: 180px;
+  }
+
+  .collab-card h3 {
+    font-size: 1.1rem;
+    padding: 20px 20px 8px;
+  }
+
+  .collab-card p {
+    font-size: 0.9rem;
+    padding: 0 20px 20px;
+  }
+
+  .contact-info-card {
+    padding: 20px;
+    gap: 15px;
+  }
+
+  .contact-info-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
+
+  .contact-info-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .contact-info-card p {
+    font-size: 0.95rem;
+  }
+
+  .contact-form {
+    padding: 25px 20px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 15px;
+    font-size: 0.95rem;
+  }
+
+  .submit-button {
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  .footer {
+    padding: 25px 0;
+  }
+
+  .footer p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 400px) {
+  .logo-text {
+    font-size: 0.95rem;
+  }
+
+  .nav a {
+    padding: 14px 15px !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-headline {
+    font-size: 0.9rem;
+  }
+
+  .section h2 {
+    font-size: 1.3rem;
   }
 }
