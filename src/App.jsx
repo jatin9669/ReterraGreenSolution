@@ -4,11 +4,12 @@ import './App.css'
 function App() {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
-    phone: '',
-    message: ''
+    materialType: '',
+    quantity: '',
+    phone: ''
   })
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Clear hash and scroll to top on page load/refresh
   useEffect(() => {
@@ -30,10 +31,37 @@ function App() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert('Thank you for your inquiry! We will get back to you soon.')
-    setFormData({ name: '', email: '', phone: '', message: '' })
+    setIsSubmitting(true)
+    
+    // Send to Formspree
+    try {
+      const response = await fetch('https://formspree.io/f/mdadrejq', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          materialType: formData.materialType,
+          quantity: formData.quantity,
+          phone: formData.phone
+        })
+      })
+      
+      if (response.ok) {
+        alert('Thank you for your submission! We will get back to you soon.')
+        setFormData({ name: '', materialType: '', quantity: '', phone: '' })
+      } else {
+        alert('Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      alert('Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -56,12 +84,10 @@ function App() {
           </button>
           <nav className={`nav ${menuOpen ? 'open' : ''}`}>
             <a href="#about" onClick={handleNavClick}>About Us</a>
-            <a href="#challenge" onClick={handleNavClick}>Challenge</a>
-            <a href="#opportunities" onClick={handleNavClick}>Opportunities</a>
-            <a href="#approach" onClick={handleNavClick}>Our Approach</a>
+            <a href="#team" onClick={handleNavClick}>Our Team</a>
             <a href="#plan" onClick={handleNavClick}>Our Offerings</a>
             <a href="#collaborations" onClick={handleNavClick}>Collaborations</a>
-            <a href="#contact" onClick={handleNavClick}>Contact</a>
+            <a href="#contact" onClick={handleNavClick}>Sell Your Panel</a>
           </nav>
         </div>
       </header>
@@ -124,24 +150,31 @@ function App() {
           
           <div className="importance-section">
             <h3>It's important to consider "What we leave behind"</h3>
-            <div className="framework-grid">
-              <div className="framework-card">
-                <div className="framework-icon">📋</div>
+            <div className="flowchart-linear">
+              <div className="flowchart-item problem">
+                <div className="flowchart-number">1</div>
+                <div className="flowchart-icon">📋</div>
                 <h4>Current Framework</h4>
                 <p>Partial Extraction of Aluminium, Glass & Junction Box being done</p>
               </div>
-              <div className="framework-card">
-                <div className="framework-icon">⚠️</div>
+              <div className="flowchart-arrow-linear">→</div>
+              <div className="flowchart-item problem">
+                <div className="flowchart-number">2</div>
+                <div className="flowchart-icon">⚠️</div>
                 <h4>Current Impact to Society</h4>
                 <p>Loss of prospective value which can be recovered from Solar Cells & waste dumped into landfills harming our planet.</p>
               </div>
-              <div className="framework-card highlight">
-                <div className="framework-icon">⚙️</div>
+              <div className="flowchart-arrow-linear">→</div>
+              <div className="flowchart-item solution">
+                <div className="flowchart-number">3</div>
+                <div className="flowchart-icon">⚙️</div>
                 <h4>Our Process</h4>
                 <p>With all certifications & world class technology in place, we recover highest value from solar panel compared to all other traditional methods.</p>
               </div>
-              <div className="framework-card highlight">
-                <div className="framework-icon">🌍</div>
+              <div className="flowchart-arrow-linear">→</div>
+              <div className="flowchart-item solution">
+                <div className="flowchart-number">4</div>
+                <div className="flowchart-icon">🌍</div>
                 <h4>Impact we leave to Earth</h4>
                 <p>With Proper Recycling, we aim to Create a truly circular economy and recovering crucial metals and minerals which are not recovered in traditional methods.</p>
               </div>
@@ -150,192 +183,81 @@ function App() {
         </div>
       </section>
 
-      {/* Challenge Section */}
-      <section id="challenge" className="section challenge">
+      {/* Team Section */}
+      <section id="team" className="section team">
         <div className="container">
-          <h2>Challenge</h2>
-          <div className="challenge-header">
-            <img 
-              src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80" 
-              alt="Environmental challenges"
-              className="challenge-hero-img"
-            />
-            <h3>Our Services Environmental Challenges</h3>
-            <p>
-              Hydrotech redefines your relationship with energy. Save money. Minimize your carbon footprint. 
-              Take control of your power costs today!
-            </p>
-          </div>
-          <div className="challenge-grid">
-            <div className="challenge-card">
-              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="E-waste" />
-              <h4>E-Waste Volume and Composition</h4>
-              <p>Foresee the pain and trouble that we are bounds to ensue equal blame belongs to their duty...</p>
-            </div>
-            <div className="challenge-card">
-              <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=400&q=80" alt="Landfill" />
-              <h4>Landfill Contamination and Soil Pollution</h4>
-              <p>Foresee the pain and trouble that we are bounds to ensue equal blame belongs to their duty...</p>
-            </div>
-            <div className="challenge-card">
-              <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=400&q=80" alt="Energy" />
-              <h4>Resource Depletion and Energy Consumption</h4>
-              <p>Foresee the pain and trouble that we are bounds to ensue equal blame belongs to their duty...</p>
-            </div>
-            <div className="challenge-card">
-              <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=400&q=80" alt="Emissions" />
-              <h4>Greenhouse Gas Emissions</h4>
-              <p>Foresee the pain and trouble that we are bounds to ensue equal blame belongs to their duty...</p>
-            </div>
-            <div className="challenge-card">
-              <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=80" alt="Recycling" />
-              <h4>Complex Recycling Challenges</h4>
-              <p>Foresee the pain and trouble that we are bounds to ensue equal blame belongs to their duty...</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Opportunities Section */}
-      <section id="opportunities" className="section opportunities">
-        <div className="container">
-          <h2>Opportunities</h2>
-          <div className="opportunities-header">
-            <span className="highlight-badge">Highlights</span>
-            <h3>Economic Opportunities</h3>
-            <p>For creating value and pursuing economic avenues</p>
-          </div>
-          <div className="opportunities-accordion">
-            <div className="accordion-item">
-              <div className="accordion-icon">♻️</div>
-              <div className="accordion-content">
-                <h4>Resource Recovery and Circular Economy</h4>
-                <p>
-                  End-of-life solar panels contain valuable materials like silicon, glass, aluminum, and rare earth elements. 
-                  Proper recycling processes enable the recovery and reuse of these materials, fostering a circular economy 
-                  where recycled materials feed back into the production cycle, reducing the need for virgin resources.
-                </p>
+          <h2>Our Team</h2>
+          <p className="team-subtitle">Meet the passionate minds driving sustainable innovation</p>
+          <div className="team-grid">
+            <div className="team-card">
+              <div className="team-photo">
+                <img src="/images/Jinesh.png" alt="Jinesh Sipani" />
               </div>
-              <div className="accordion-arrow">→</div>
-            </div>
-            <div className="accordion-item">
-              <div className="accordion-icon">💡</div>
-              <div className="accordion-content">
-                <h4>Innovation and Technological Advancements</h4>
-                <p>
-                  The need for efficient recycling methods has spurred innovation in the field of PV waste management. 
-                  Companies investing in research and development to improve recycling technologies create opportunities 
-                  for breakthroughs, fostering technological advancements that benefit both the industry and the environment.
-                </p>
-              </div>
-              <div className="accordion-arrow">→</div>
-            </div>
-            <div className="accordion-item">
-              <div className="accordion-icon">👥</div>
-              <div className="accordion-content">
-                <h4>Job Creation and Economic Growth</h4>
-                <p>
-                  The solar panel recycling industry generates employment opportunities across various sectors, including 
-                  recycling facilities, research and development, logistics, and more. This sector's growth contributes 
-                  to economic development, supporting local and global economies.
-                </p>
-              </div>
-              <div className="accordion-arrow">→</div>
-            </div>
-            <div className="accordion-item">
-              <div className="accordion-icon">📈</div>
-              <div className="accordion-content">
-                <h4>Market Expansion and Sustainability Services</h4>
-                <p>
-                  With an increasing focus on sustainability, businesses and governments seek services that align with 
-                  responsible waste management and recycling. Companies like Regain Energies Pvt. Ltd. offering specialized 
-                  solar panel recycling services cater to this growing market demand.
-                </p>
-              </div>
-              <div className="accordion-arrow">→</div>
-            </div>
-            <div className="accordion-item">
-              <div className="accordion-icon">🤝</div>
-              <div className="accordion-content">
-                <h4>Value Chain Integration and Collaboration</h4>
-                <p>
-                  Solar panel recycling necessitates collaboration across the entire value chain, from manufacturers to 
-                  recyclers and policymakers. This collaboration fosters partnerships, alliances, and knowledge-sharing 
-                  initiatives that contribute to a more integrated and sustainable solar industry.
-                </p>
-              </div>
-              <div className="accordion-arrow">→</div>
-            </div>
-            <div className="accordion-item">
-              <div className="accordion-icon">🔄</div>
-              <div className="accordion-content">
-                <h4>Waste-to-Resource Transformation</h4>
-                <p>
-                  Recycling PV waste transforms what was once considered waste into valuable resources. Recovering materials 
-                  from end-of-life solar panels not only mitigates environmental impacts but also adds value by creating 
-                  secondary raw materials for various industries.
-                </p>
-              </div>
-              <div className="accordion-arrow">→</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Approach Section */}
-      <section id="approach" className="section approach">
-        <div className="container">
-          <h2>Our Approach</h2>
-          <p className="approach-subtitle">What we do with existing panels, including premature breakage</p>
-          <div className="approach-image">
-            <img 
-              src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1000&q=80" 
-              alt="Solar panel recycling process"
-            />
-          </div>
-          <div className="approach-timeline">
-            <div className="approach-step">
-              <div className="step-number">1</div>
-              <div className="step-content">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&q=80" alt="Collection" />
-                <h4>Collection and Assessment</h4>
-                <p>
-                  We collect end-of-life or damaged solar panels from various sources, including manufacturers and 
-                  Developers. The company conducts an assessment to determine the condition and level of damage.
-                </p>
+              <div className="team-info">
+                <h3>Jinesh Sipani</h3>
+                <span className="team-title">CA (AIR 12), CMA (AIR 2)</span>
+                <ul className="team-details">
+                  <li>Renewable energy analyst with sector and business-model insights.</li>
+                  <li>Hands-on experience in research, equity analysis, and financial modeling.</li>
+                  <li>Investment Banking, bringing structured thinking and execution focus.</li>
+                </ul>
               </div>
             </div>
-            <div className="approach-step">
-              <div className="step-number">2</div>
-              <div className="step-content">
-                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Sorting" />
-                <h4>Sorting and Segregation</h4>
-                <p>
-                  Panels are sorted based on their condition and damage severity. Panels with premature breakage, 
-                  defects, or irreparable damage are segregated for appropriate processing.
-                </p>
+            <div className="team-card">
+              <div className="team-photo">
+                <img src="/images/Harsheel.jpg" alt="Harsheel H. Shah" />
+              </div>
+              <div className="team-info">
+                <h3>Harsheel H. Shah</h3>
+                <span className="team-title">Entrepreneur</span>
+                <ul className="team-details">
+                  <li>Global finance exposure from an audit internship in Dubai.</li>
+                  <li>Built a quick commerce platform – HS MART in 10th grade, enabling 3-hour grocery delivery within Surat.</li>
+                  <li>Focused on building sustainable, value-added solutions that convert waste into resources.</li>
+                </ul>
               </div>
             </div>
-            <div className="approach-step">
-              <div className="step-number">3</div>
-              <div className="step-content">
-                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=80" alt="Recovery" />
-                <h4>Material Recovery and Recycling</h4>
-                <p>
-                  We employ specialized recycling processes to recover valuable materials from these damaged or 
-                  end-of-life panels. This includes Material Extraction, Resource Reclamation & Environmental Compliance.
-                </p>
+            <div className="team-card">
+              <div className="team-photo">
+                <img src="/images/Daksh.png" alt="Daksh Patel" />
+              </div>
+              <div className="team-info">
+                <h3>Daksh Patel</h3>
+                <span className="team-title">Entrepreneur</span>
+                <ul className="team-details">
+                  <li>Founded IJO International after 12th, exporting fruit powders globally.</li>
+                  <li>Actively manages family textile business, IJO FAB.</li>
+                  <li>Growing focus on solar panel and Li-ion battery recycling, building sustainable, value-creating solutions.</li>
+                </ul>
               </div>
             </div>
-            <div className="approach-step">
-              <div className="step-number">4</div>
-              <div className="step-content">
-                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&q=80" alt="Reuse" />
-                <h4>Reuse and Repurposing</h4>
-                <p>
-                  Salvageable components or materials are often refurbished or repurposed for use in various industries, 
-                  reducing the demand for virgin resources and promoting a circular economy.
-                </p>
+            <div className="team-card">
+              <div className="team-photo">
+                <img src="/images/Chirag.png" alt="Chirag Karnani" />
+              </div>
+              <div className="team-info">
+                <h3>Chirag Karnani</h3>
+                <span className="team-title">CA, B.com</span>
+                <ul className="team-details">
+                  <li>Led statutory audits for a ₹4 lakh crore treasury Conglomerate.</li>
+                  <li>Over 3+ years of experience at Big 4s covering solar manufacturing, services & media sectors.</li>
+                  <li>Expertise in analytical reviews and variance analysis of recycling yields and cost efficiencies.</li>
+                </ul>
+              </div>
+            </div>
+            <div className="team-card">
+              <div className="team-photo">
+                <img src="/images/Parv.png" alt="Parv Jain" />
+              </div>
+              <div className="team-info">
+                <h3>Parv Jain</h3>
+                <span className="team-title">CA (AIR 16)</span>
+                <ul className="team-details">
+                  <li>Gold medal in Direct Taxation.</li>
+                  <li>Leading a RA model portfolios division with ₹2,000+ crore AUA.</li>
+                  <li>National runner-up in data analytics & visualization.</li>
+                  <li>Did extensive ground research on e-waste recyclers.</li>
+                </ul>
               </div>
             </div>
           </div>
@@ -446,31 +368,14 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Sell Your Panel Section */}
       <section id="contact" className="section contact">
         <div className="container">
-          <h2>Contact Us</h2>
+          <h2>Sell Your Panel</h2>
           <div className="contact-wrapper">
-            <div className="contact-info">
-              <div className="contact-info-card">
-                <div className="contact-info-icon">📍</div>
-                <h3>Address</h3>
-                <p>Tapi, Gujarat, India</p>
-              </div>
-              <div className="contact-info-card">
-                <div className="contact-info-icon">📧</div>
-                <h3>Email</h3>
-                <p><a href="mailto:info@reterragreensol.com">info@reterragreensol.com</a></p>
-              </div>
-              <div className="contact-info-card">
-                <div className="contact-info-icon">📞</div>
-                <h3>Phone</h3>
-                <p><a href="tel:+919510931087">+91-9510931087</a></p>
-              </div>
-            </div>
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Your Name / Organisation Name</label>
                 <input
                   type="text"
                   id="name"
@@ -478,45 +383,48 @@ function App() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  placeholder="Your Name"
+                  placeholder="Your Name or Organisation"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="materialType">Type of Material Available</label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
+                  type="text"
+                  id="materialType"
+                  name="materialType"
+                  value={formData.materialType}
                   onChange={handleChange}
                   required
-                  placeholder="your@email.com"
+                  placeholder="e.g., Solar Panels, Cells, etc."
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="phone">Phone</label>
+                <label htmlFor="quantity">Quantity Available (in Pieces/Tonnes)</label>
+                <input
+                  type="text"
+                  id="quantity"
+                  name="quantity"
+                  value={formData.quantity}
+                  onChange={handleChange}
+                  required
+                  placeholder="e.g., 500 pieces or 10 tonnes"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">Your Contact Number</label>
                 <input
                   type="tel"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  required
                   placeholder="Your Phone Number"
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  placeholder="Your message..."
-                  rows="5"
-                />
-              </div>
-              <button type="submit" className="submit-button">Send Message</button>
+              <button type="submit" className="submit-button" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>
@@ -525,7 +433,55 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>© 2025 ReTerra Green Solutions – All Rights Reserved</p>
+          <div className="footer-logo">
+            <img src="/images/image-removebg-preview.png" alt="ReTerra Logo" />
+            <span>ReTerra Green Solutions</span>
+          </div>
+          <div className="footer-grid">
+            <div className="footer-column">
+              <h4>MAIN MENU</h4>
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Sell Your Panel</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4>QUICK LINKS</h4>
+              <ul>
+                <li><a href="#plan">Our Offerings</a></li>
+                <li><a href="#collaborations">Collaborations</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4>CONTACT US</h4>
+              <ul className="contact-list">
+                <li>
+                  <span className="contact-icon">📍</span>
+                  <a href="https://maps.google.com/?q=4TH+FLOOR,+TAPI+VILLA,+34,+Vijay+Nagar,+Surat,+Gujarat+395001" target="_blank" rel="noopener noreferrer">4TH FLOOR, TAPI VILLA, 34, Vijay Nagar, Surat, Gujarat 395001</a>
+                </li>
+                <li>
+                  <span className="contact-icon">📧</span>
+                  <a href="mailto:info@reterragreensol.com">info@reterragreensol.com</a>
+                </li>
+                <li>
+                  <span className="contact-icon">📞</span>
+                  <a href="tel:+919510931087">+91-9510931087</a>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-column about-column">
+              <h4>ABOUT RETERRA</h4>
+              <p>
+                ReTerra Green Solutions is India's leading solar panel recycler, 
+                established in 2025. We provide compliant, convenient and credible 
+                sustainability solutions for the solar industry.
+              </p>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>© 2025 ReTerra Green Solutions Pvt. Ltd.</p>
+          </div>
         </div>
       </footer>
     </div>

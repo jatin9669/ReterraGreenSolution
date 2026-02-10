@@ -1,0 +1,6 @@
+# robots.txt for ReTerra Green Solutions
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://reterragreensol.com/sitemap.xml
