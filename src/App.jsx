@@ -83,11 +83,17 @@ function App() {
             <span></span>
           </button>
           <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-            <a href="#about" onClick={handleNavClick}>About Us</a>
-            <a href="#team" onClick={handleNavClick}>Our Team</a>
-            <a href="#offerings" onClick={handleNavClick}>Our Offerings</a>
-            <a href="#collaborations" onClick={handleNavClick}>Collaborations</a>
-            <a href="#contact" onClick={handleNavClick}>Sell Your Panel</a>
+            <div className="nav-header">
+              <img src="/images/image-removebg-preview.png" alt="ReTerra Logo" className="nav-logo" />
+              <span className="nav-company-name">ReTerra Green Solutions</span>
+            </div>
+            <div className="nav-links">
+              <a href="#about" onClick={handleNavClick}>About Us</a>
+              <a href="#team" onClick={handleNavClick}>Our Team</a>
+              <a href="#offerings" onClick={handleNavClick}>Our Offerings</a>
+              <a href="#collaborations" onClick={handleNavClick}>Collaborations</a>
+              <a href="#contact" onClick={handleNavClick}>Sell Your Panel</a>
+            </div>
           </nav>
         </div>
       </header>
