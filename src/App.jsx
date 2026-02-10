@@ -85,7 +85,7 @@ function App() {
           <nav className={`nav ${menuOpen ? 'open' : ''}`}>
             <a href="#about" onClick={handleNavClick}>About Us</a>
             <a href="#team" onClick={handleNavClick}>Our Team</a>
-            <a href="#plan" onClick={handleNavClick}>Our Offerings</a>
+            <a href="#offerings" onClick={handleNavClick}>Our Offerings</a>
             <a href="#collaborations" onClick={handleNavClick}>Collaborations</a>
             <a href="#contact" onClick={handleNavClick}>Sell Your Panel</a>
           </nav>
@@ -265,7 +265,7 @@ function App() {
       </section>
 
       {/* Our Offerings Section */}
-      <section id="plan" className="section offerings">
+      <section id="offerings" className="section offerings">
         <div className="container">
           <h2>Our Offerings</h2>
           <div className="offerings-grid">
@@ -450,7 +450,7 @@ function App() {
             <div className="footer-column">
               <h4>QUICK LINKS</h4>
               <ul>
-                <li><a href="#plan">Our Offerings</a></li>
+                <li><a href="#offerings">Our Offerings</a></li>
                 <li><a href="#collaborations">Collaborations</a></li>
               </ul>
             </div>
