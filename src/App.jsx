@@ -8,6 +8,7 @@ function App() {
     quantity: '',
     phone: ''
   })
+  const [formErrors, setFormErrors] = useState({})
   const [menuOpen, setMenuOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -33,6 +34,20 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    // Validate all fields
+    const errors = {}
+    if (!formData.name.trim()) errors.name = 'Name is required'
+    if (!formData.materialType.trim()) errors.materialType = 'Material type is required'
+    if (!formData.quantity.trim()) errors.quantity = 'Quantity is required'
+    if (!formData.phone.trim()) errors.phone = 'Contact number is required'
+    
+    setFormErrors(errors)
+    
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+    
     setIsSubmitting(true)
     
     // Send to Formspree
@@ -91,8 +106,7 @@ function App() {
               <a href="#about" onClick={handleNavClick}>About Us</a>
               <a href="#team" onClick={handleNavClick}>Our Team</a>
               <a href="#offerings" onClick={handleNavClick}>Our Offerings</a>
-              <a href="#collaborations" onClick={handleNavClick}>Collaborations</a>
-              <a href="#contact" onClick={handleNavClick}>Sell Your Panel</a>
+              <a href="#contact" onClick={handleNavClick}>Sell Your Panels</a>
             </div>
           </nav>
         </div>
@@ -197,15 +211,16 @@ function App() {
           <div className="team-grid">
             <div className="team-card">
               <div className="team-photo">
-                <img src="/images/Jinesh.png" alt="Jinesh Sipani" />
+                <img src="/images/Parv.png" alt="Parv Jain" />
               </div>
               <div className="team-info">
-                <h3>Jinesh Sipani</h3>
-                <span className="team-title">CA (AIR 12), CMA (AIR 2)</span>
+                <h3>Parv Jain</h3>
+                <span className="team-title">CA (AIR 16)</span>
                 <ul className="team-details">
-                  <li>Renewable energy analyst with sector and business-model insights.</li>
-                  <li>Hands-on experience in research, equity analysis, and financial modeling.</li>
-                  <li>Investment Banking, bringing structured thinking and execution focus.</li>
+                  <li>Gold medal in Direct Taxation.</li>
+                  <li>Leading a RA model portfolios division with ₹2,000+ crore AUA.</li>
+                  <li>National runner-up in data analytics & visualization.</li>
+                  <li>Did extensive ground research on e-waste recyclers.</li>
                 </ul>
               </div>
             </div>
@@ -248,21 +263,6 @@ function App() {
                   <li>Led statutory audits for a ₹4 lakh crore treasury Conglomerate.</li>
                   <li>Over 3+ years of experience at Big 4s covering solar manufacturing, services & media sectors.</li>
                   <li>Expertise in analytical reviews and variance analysis of recycling yields and cost efficiencies.</li>
-                </ul>
-              </div>
-            </div>
-            <div className="team-card">
-              <div className="team-photo">
-                <img src="/images/Parv.png" alt="Parv Jain" />
-              </div>
-              <div className="team-info">
-                <h3>Parv Jain</h3>
-                <span className="team-title">CA (AIR 16)</span>
-                <ul className="team-details">
-                  <li>Gold medal in Direct Taxation.</li>
-                  <li>Leading a RA model portfolios division with ₹2,000+ crore AUA.</li>
-                  <li>National runner-up in data analytics & visualization.</li>
-                  <li>Did extensive ground research on e-waste recyclers.</li>
                 </ul>
               </div>
             </div>
@@ -325,108 +325,59 @@ function App() {
         </div>
       </section>
 
-      {/* Collaborations Section */}
-      <section id="collaborations" className="section collaborations">
-        <div className="container">
-          <h2>Our Collaborations</h2>
-          <p className="collab-subtitle">Building partnerships for a sustainable future</p>
-          <div className="collab-grid">
-            <div className="collab-card">
-              <div className="collab-icon-wrapper">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=80" alt="Manufacturers" />
-                <div className="collab-overlay">
-                  <span className="collab-icon">🏭</span>
-                </div>
-              </div>
-              <h3>Manufacturers</h3>
-              <p>Partnering with solar panel manufacturers to ensure responsible end-of-life management of their products.</p>
-              <div className="collab-hover-content">
-                <span>Learn More →</span>
-              </div>
-            </div>
-            <div className="collab-card">
-              <div className="collab-icon-wrapper">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&q=80" alt="R&D" />
-                <div className="collab-overlay">
-                  <span className="collab-icon">🔬</span>
-                </div>
-              </div>
-              <h3>Research & Development Institutions</h3>
-              <p>Collaborating with leading research institutions to develop cutting-edge recycling technologies.</p>
-              <div className="collab-hover-content">
-                <span>Learn More →</span>
-              </div>
-            </div>
-            <div className="collab-card">
-              <div className="collab-icon-wrapper">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&q=80" alt="Supply Chain" />
-                <div className="collab-overlay">
-                  <span className="collab-icon">🔗</span>
-                </div>
-              </div>
-              <h3>Supply Chain Collaborations</h3>
-              <p>Working with logistics partners, EPCs, and distributors to create an efficient reverse supply chain.</p>
-              <div className="collab-hover-content">
-                <span>Learn More →</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sell Your Panel Section */}
+      {/* Sell Your Panels Section */}
       <section id="contact" className="section contact">
         <div className="container">
-          <h2>Sell Your Panel</h2>
+          <h2>Sell Your Panels</h2>
           <div className="contact-wrapper">
             <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Your Name / Organisation Name</label>
+              <div className={`form-group ${formErrors.name ? 'has-error' : ''}`}>
+                <label htmlFor="name">Your Name / Organisation Name <span className="required">*</span></label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  required
                   placeholder="Your Name or Organisation"
                 />
+                {formErrors.name && <span className="error-message">{formErrors.name}</span>}
               </div>
-              <div className="form-group">
-                <label htmlFor="materialType">Type of Material Available</label>
+              <div className={`form-group ${formErrors.materialType ? 'has-error' : ''}`}>
+                <label htmlFor="materialType">Type of Material Available <span className="required">*</span></label>
                 <input
                   type="text"
                   id="materialType"
                   name="materialType"
                   value={formData.materialType}
                   onChange={handleChange}
-                  required
                   placeholder="e.g., Solar Panels, Cells, etc."
                 />
+                {formErrors.materialType && <span className="error-message">{formErrors.materialType}</span>}
               </div>
-              <div className="form-group">
-                <label htmlFor="quantity">Quantity Available (in Pieces/Tonnes)</label>
+              <div className={`form-group ${formErrors.quantity ? 'has-error' : ''}`}>
+                <label htmlFor="quantity">Quantity Available (in Pieces/Tonnes) <span className="required">*</span></label>
                 <input
                   type="text"
                   id="quantity"
                   name="quantity"
                   value={formData.quantity}
                   onChange={handleChange}
-                  required
                   placeholder="e.g., 500 pieces or 10 tonnes"
                 />
+                {formErrors.quantity && <span className="error-message">{formErrors.quantity}</span>}
               </div>
-              <div className="form-group">
-                <label htmlFor="phone">Your Contact Number</label>
+              <div className={`form-group ${formErrors.phone ? 'has-error' : ''}`}>
+                <label htmlFor="phone">Your Contact Number <span className="required">*</span></label>
                 <input
                   type="tel"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  required
                   placeholder="Your Phone Number"
                 />
+                {formErrors.phone && <span className="error-message">{formErrors.phone}</span>}
               </div>
               <button type="submit" className="submit-button" disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting...' : 'Submit'}
@@ -450,14 +401,13 @@ function App() {
                 <li><a href="#">Home</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#team">Our Team</a></li>
-                <li><a href="#contact">Sell Your Panel</a></li>
+                <li><a href="#contact">Sell Your Panels</a></li>
               </ul>
             </div>
             <div className="footer-column">
               <h4>QUICK LINKS</h4>
               <ul>
                 <li><a href="#offerings">Our Offerings</a></li>
-                <li><a href="#collaborations">Collaborations</a></li>
               </ul>
             </div>
             <div className="footer-column">
@@ -473,7 +423,7 @@ function App() {
                 </li>
                 <li>
                   <span className="contact-icon">📞</span>
-                  <a href="tel:+919510931087">+91-9510931087</a>
+                  <a href="tel:+919510931087">Parv Jain: +91-9510931087</a>
                 </li>
               </ul>
             </div>
@@ -487,7 +437,7 @@ function App() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© 2025 ReTerra Green Solutions Pvt. Ltd.</p>
+            <p>© 2025 ReTerra Green Solutions Partnership Firm</p>
           </div>
         </div>
       </footer>
