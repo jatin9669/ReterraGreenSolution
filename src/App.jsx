@@ -443,6 +443,7 @@ function App() {
               <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#about">About Us</a></li>
+                <li><a href="#team">Our Team</a></li>
                 <li><a href="#contact">Sell Your Panel</a></li>
               </ul>
             </div>
