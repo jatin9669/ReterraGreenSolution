@@ -104,7 +104,7 @@ function App() {
         <div className="hero-content">
           <p className="hero-welcome">Welcome to</p>
           <h1>ReTerra Green Solutions</h1>
-          <h2 className="hero-headline">Revolutionizing Solar Panel Recycling for a Sustainable Future</h2>
+          <h2 className="hero-headline">Revolutionizing Solar Panel Recycling for a Sustainable Future & Circular Economy</h2>
           <div className="hero-cta">
             <a href="#about" className="cta-button primary">Learn More</a>
             <a href="#contact" className="cta-button secondary">Contact Us</a>
